@@ -28,7 +28,9 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "crypto": "0.0.3"
+    "crypto": "0.0.3",
+    "googleapis": "~0.4.5",
+    "google-oauth-serviceaccount": "0.0.1"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.0",
