@@ -40,16 +40,16 @@ module.exports = function(grunt) {
                     spawn: false
                 }
             }
+        },
+        // Unit tests.
+        nodeunit: {
+            tests: ['test/*_test.js']
         }
-//        // Unit tests.
-//        nodeunit: {
-//            tests: ['test/*_test.js']
-//        }
 
     });
     grunt.event.on('watch', function(action, filepath) {
         console.log('watch', action, filepath);
-        grunt.config('google_cloud_storage.default_options.files', filepath);
+        grunt.config('google_cloud_storage.default_options.file', filepath);
         grunt.config('google_cloud_storage.default_options.event', action);
     });
 
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result.
-    grunt.registerTask('test', ['clean', 'google_cloud_storage', 'nodeunit']);
+    grunt.registerTask('test', [/*'clean',*/ 'watch', 'nodeunit']);
     // By default, lint and run all tests.
     grunt.registerTask('default', ['watch']);
 };

@@ -1,48 +1,50 @@
 {
-    "name": "grunt-google-cloud-storage",
-    "description": "Google Cloud Storage tasks.",
-    "version": "0.1.0",
-    "homepage": "https://github.com/UsabilityDynamics/grunt-google-cloud-storage",
-    "author": {
-        "name": "Andy Potanin",
-        "email": "andy.potanin@usabilitydynamics.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/UsabilityDynamics/grunt-google-cloud-storage.git"
-    },
-    "bugs": {
-        "url": "https://github.com/UsabilityDynamics/grunt-google-cloud-storage/issues"
-    },
-    "licenses": [
-        {
-            "type": "MIT",
-            "url": "https://github.com/UsabilityDynamics/grunt-google-cloud-storage/blob/master/LICENSE-MIT"
-        }
-    ],
-    "main": "Gruntfile.js",
-    "engines": {
-        "node": ">= 0.8.0"
-    },
-    "scripts": {
-        "test": "grunt test"
-    },
-    "dependencies": {
-        "crypto": "0.0.3",
-        "googleapis": "~0.4.5",
-        "google-oauth-serviceaccount": "0.0.1"
-    },
-    "devDependencies": {
-        "grunt-contrib-jshint": "~0.6.0",
-        "grunt-contrib-clean": "~0.4.0",
-        "grunt-contrib-nodeunit": "~0.2.0",
-        "grunt-contrib-watch": "~0.5.3",
-        "grunt": "~0.4.1"
-    },
-    "peerDependencies": {
-        "grunt": "~0.4.1"
-    },
-    "keywords": [
-        "gruntplugin"
-    ]
+  "name": "grunt-google-cloud-storage",
+  "description": "Google Cloud Storage tasks.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/UsabilityDynamics/grunt-google-cloud-storage",
+  "author": {
+    "name": "Andy Potanin",
+    "email": "andy.potanin@usabilitydynamics.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/UsabilityDynamics/grunt-google-cloud-storage.git"
+  },
+  "bugs": {
+    "url": "https://github.com/UsabilityDynamics/grunt-google-cloud-storage/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/UsabilityDynamics/grunt-google-cloud-storage/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {
+    "crypto": "0.0.3",
+    "googleapis": "~0.4.5",
+    "google-oauth-serviceaccount": "0.0.1",
+    "nconf": "~0.6.9",
+    "request": "~2.33.0"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt": "~0.4.1"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.1"
+  },
+  "keywords": [
+    "gruntplugin"
+  ]
 }
