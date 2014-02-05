@@ -9,38 +9,64 @@
 var gauth = require('../lib/google-oauth-serviceaccount');
 var request = require('request');
 var fs = require('fs');
+var async = require('async');
+var path = require('path');
 module.exports = function(grunt) {
     'use strict';
     var accessToken = null;
     grunt.registerMultiTask('google_cloud_storage', 'Google Cloud Storage tasks.', function() {
         var event = this.data.event,
             file = this.data.file;
-
-        if (!accessToken) {
-            gauth.auth(function(err, accessToken) {
-                if(err) console.log(err);
+            var upload = function (file, bucket) {
+                if (!file) throw Error('You must specify file to upload');
+                if (!bucket) throw Error('You must specify bucket');
+                file = fs.realpathSync(__dirname + '/../' + file);
+                var fName = path.basename(file);
+                var url = 'https://www.googleapis.com/upload/storage/v1beta2/b/' + bucket + '/o';
+                var queryParams = {
+                    'uploadType': 'media',
+                    'name': fName
+                };
                 var headers = {};
-                var bucket = 'nestorenok-cdn';
-                var filepath = 'readme.md';
-                var stream = fs.createReadStream(filepath);
-//                stream.pause();
-                var stats = fs.statSync(filepath);
-                console.log(stats);
-                headers.Authorization = 'Bearer ' + accessToken;
-                //                headers.Date = new Date().toString();
-//                headers.Host = 'storage.googleapis.com';
-//                headers['x-goog-api-version'] = 2;
-                headers['Content-Type'] = 'text/plain';
-                headers['Content-Length'] = stats.size;
-                console.log(stream);
-                var url = 'https://storage.googleapis.com/upload/storage/v1beta2/b/' + bucket + '/o?uploadType=media&name=object';
-//                stream.resume();
-                stream.pipe(request.post(url, {headers: headers}, function(err, request, body) {
-                    console.log(accessToken);
-                    console.log(request.statusCode);
-                    console.log(body);
-                }));
-            })
-        }
+                async.waterfall([
+                    function getStats (callback) {
+                        console.info('getting stats');
+                        console.info(file);
+                        fs.stat(file, callback);
+                    },
+
+                    function createRequestStream (stats, callback) {
+                        console.info('create steam');
+                        var stream = fs.createReadStream(file);
+                        callback(null, stream, stats);
+                    },
+
+                    function createRequest (stream, stats, callback) {
+                        gauth.auth(function (err, accessToken) {
+                            if (err) callback(err);
+                            console.info('creating request');
+                            headers['Authorization'] = 'Bearer ' + accessToken;
+                            headers['Content-Type'] = 'text/plain';
+                            headers['Content-Length'] = stats.size;
+                            stream.pipe(
+                                request.post(
+                                    url, {headers: headers, qs: queryParams}, callback
+                                )
+                            );
+                        });
+                    }
+                ], function(err, request, body) {
+                    if (err) throw err;
+                    if (request.statusCode == 200) {
+                        var data  = JSON.parse(body);
+                        if (data.hasOwnProperty('selfLink')) {
+                            console.log('File has been successfully uploaded to ' + bucket + ' bucket and now has link: ' + data.selfLink);
+                        } else {
+                            throw new Error('Error has happene while uploading to ' + bucket + ' bucket!');
+                        }
+                    }
+                });
+            }
+            upload(file, 'nestorenok-cdn');
     });
 };
