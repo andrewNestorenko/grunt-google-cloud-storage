@@ -33,7 +33,8 @@
     "google-oauth-serviceaccount": "0.0.1",
     "nconf": "~0.6.9",
     "request": "~2.33.0",
-    "async": "~0.2.10"
+    "async": "~0.2.10",
+    "mime": "~1.2.11"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.0",

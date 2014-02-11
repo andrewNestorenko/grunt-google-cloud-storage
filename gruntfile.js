@@ -25,9 +25,15 @@ module.exports = function(grunt) {
         google_cloud_storage: {
             default_options: {
                 options: {
-                },
-                files: {
-
+                    google: {
+                        keyFile: 'key/certificates.pem',
+                        expiresInMinutes: 60,
+                        claim: {
+                            "iss": "908383940405@developer.gserviceaccount.com",
+                            "scope": "https://www.googleapis.com/auth/devstorage.full_control",
+                            "aud": "https://accounts.google.com/o/oauth2/token"
+                        }
+                    }
                 }
             }
         },
